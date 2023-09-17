@@ -1,5 +1,5 @@
 function setup() {
-  createCanvas(1000, 1000, true);
+  setCanvasContainer('p5-canvas', 2, 2, true);
   background('white');
 }
 
@@ -217,7 +217,7 @@ function draw() {
   vertex(310, 850);
   vertex(310, 1000);
   endShape(close);
-  rect(350, 900, 20, 100);
+  rect(350, 900, 20, 85);
   rect(350, 890, 60, 20, 8, 0);
   rect(390, 830, 20, 60, 8, 8, 0, 0);
   rectMode(CENTER);
