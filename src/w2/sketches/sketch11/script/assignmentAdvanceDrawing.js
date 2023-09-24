@@ -1,5 +1,5 @@
 function setup() {
-  createCanvas(1000, 1000, true);
+  setCanvasContainer('p5-canvas', 2, 2, true);
   background('white');
 }
 
