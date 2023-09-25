@@ -13,8 +13,6 @@ function setup() {
   acc.mult(0.1);
   mv = createVector();
   posToMv = createVector();
-  velocity = createVector();
-  accelertaion = createVector();
 }
 
 function draw() {
@@ -23,7 +21,10 @@ function draw() {
   display();
   checkEdges();
   mv.set(mouseX, mouseY);
+  step1();
+}
 
+function step1() {
   posToMv = p5.Vector.sub(mv, pos);
   strokeWeight(1);
   stroke('black');
@@ -35,7 +36,9 @@ function draw() {
   line(0, 0, vel.x * 10, vel.y * 10);
 
   stroke('deeppink');
-  line(0, 0, acc.x * 100, acc.y * 100);
+  acc.normalize();
+  acc.mult(100);
+  line(0, 0, acc.x, acc.y);
 }
 
 function update() {

@@ -19,8 +19,11 @@ function draw() {
   background('gainsboro');
   update();
   display();
-
   mv.set(mouseX, mouseY);
+  step2();
+}
+
+function step2() {
   acc.set(posToMv.x, posToMv.y);
   translate(pos.x, pos.y);
   posToMv = p5.Vector.sub(mv, pos);
@@ -45,6 +48,19 @@ function update() {
   vel.limit(5);
   pos.add(vel);
 }
+
+// function checkEdges() {
+//   if (pos.x < 0) {
+//     pos.x = width;
+//   } else if (pos.x > width) {
+//     pos.x = 0;
+//   }
+//   if (pos.y < 0) {
+//     pos.y = height;
+//   } else if (pos.y > height) {
+//     pos.y = 0;
+//   }
+// }
 
 function display() {
   noStroke();
