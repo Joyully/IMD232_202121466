@@ -36,9 +36,7 @@ function step1() {
   line(0, 0, vel.x * 10, vel.y * 10);
 
   stroke('deeppink');
-  acc.normalize();
-  acc.mult(100);
-  line(0, 0, acc.x, acc.y);
+  line(0, 0, acc.x * 100, acc.y * 100);
 }
 
 function update() {

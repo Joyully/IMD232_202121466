@@ -24,7 +24,7 @@ function draw() {
 }
 
 function step2() {
-  acc.set(posToMv.x, posToMv.y);
+  acc = p5.Vector.sub(mv, pos);
   translate(pos.x, pos.y);
   posToMv = p5.Vector.sub(mv, pos);
 
@@ -34,7 +34,7 @@ function step2() {
 
   strokeWeight(2);
   stroke('blue');
-  line(0, 0, vel.x * 5, vel.y * 5);
+  line(0, 0, vel.x * 10, vel.y * 10);
 
   acc.normalize();
   acc.mult(0.1);
@@ -49,6 +49,12 @@ function update() {
   pos.add(vel);
 }
 
+function display() {
+  noStroke();
+  fill('white');
+  ellipse(pos.x, pos.y, 50);
+}
+
 // function checkEdges() {
 //   if (pos.x < 0) {
 //     pos.x = width;
@@ -61,9 +67,3 @@ function update() {
 //     pos.y = 0;
 //   }
 // }
-
-function display() {
-  noStroke();
-  fill('white');
-  ellipse(pos.x, pos.y, 50);
-}
