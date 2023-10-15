@@ -34,7 +34,7 @@ function draw() {
     moverA.applyForce(friction);
   }
 
-  if (moverA.isDragging) {
+  if (moverA.isHover) {
     const dragForce = p5.Vector.sub(mVec, pMVec).mult(0.1);
     moverA.applyForce(dragForce);
   }

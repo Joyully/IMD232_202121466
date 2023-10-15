@@ -28,12 +28,30 @@ class Mover {
     // rect(this.pos.x, this.pos.y, 2 * this.rad);
     // ellipse(this.pos.x, this.pos.y, 2 * this.rad);
 
+    // beginShape();
+    // vertex(this.pos.x + this.rad, this.pos.y);
+    // vertex(this.pos.x - this.rad / 2, this.pos.y - this.rad / 2);
+    // vertex(this.pos.x, this.pos.y);
+    // vertex(this.pos.x - this.rad / 2, this.pos.y + this.rad / 2);
+    // endShape(CLOSE);
+
+    push();
+    translate(this.pos.x, this.pos.y);
+    const angle = atan2(this.vel.y, this.vel.x);
+    rotate(angle);
+    stroke(0);
+    strokeWeight(1);
+    noFill();
+    // ellipse(0, 0, 2 * this.rad);
+    noStroke();
+    fill(this.color);
     beginShape();
-    vertex(this.pos.x + this.rad, this.pos.y);
-    vertex(this.pos.x - this.rad / 2, this.pos.y - this.rad / 2);
-    vertex(this.pos.x, this.pos.y);
-    vertex(this.pos.x - this.rad / 2, this.pos.y + this.rad / 2);
+    vertex(0 + this.rad, 0);
+    vertex(0 - this.rad / 2, 0 - this.rad / 2);
+    vertex(0, 0);
+    vertex(0 - this.rad / 2, 0 + this.rad / 2);
     endShape(CLOSE);
+    pop();
   }
 
   displayVectors() {

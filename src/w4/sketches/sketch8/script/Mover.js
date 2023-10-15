@@ -40,7 +40,7 @@ class MoverWithMass {
   //공튀기게 하기
   checkEdges() {
     //0.5 절반으로 생각하면 팅김의 정도를 가늠
-    const bounce = -0.7;
+    const bounce = -0.9;
     if (this.pos.x < 0 + this.radius) {
       // // 0보다 얼마나 뚫고 갔는가
       // let delta = this.pos.x - 0;
@@ -114,5 +114,6 @@ class MoverWithMass {
 
   mouseReleased() {
     this.isDragging = false;
+    this.vel = throwingForce.copy();
   }
 }
