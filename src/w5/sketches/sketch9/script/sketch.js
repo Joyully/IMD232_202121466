@@ -28,15 +28,15 @@ function draw() {
     const pointY = sin(angle) * rad + y;
     ellipse(pointX, pointY, 10);
   }
-  stroke('deeppink');
-  noFill();
-  beginShape();
-  for (let a = 0; a < nGon; a++) {
-    const angle = (TAU / nGon) * a - (TAU / 360) * 90;
-    const pointX = cos(angle) * rad + x;
-    const pointY = sin(angle) * rad + y;
-    vertex(pointX, pointY);
-  }
-  endShape(CLOSE);
+  // stroke('deeppink');
+  // noFill();
+  // beginShape();
+  // for (let a = 0; a < nGon; a++) {
+  //   const angle = (TAU / nGon) * a - (TAU / 360) * 90;
+  //   const pointX = cos(angle) * rad + x;
+  //   const pointY = sin(angle) * rad + y;
+  //   vertex(pointX, pointY);
+  // }
+  // endShape(CLOSE);
   // 공부하기
 }
