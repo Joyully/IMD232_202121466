@@ -15,20 +15,20 @@ function setup() {
 }
 
 function draw() {
-  background('gainsboro');
+  background('white');
   noFill();
 
   for (let r = 0; r < rNum; r++) {
     for (let c = 0; c < cNum; c++) {
       if (r % 2 === 1) {
         if (c % 2 === 1) {
-          stroke(0, 0, 255);
+          stroke('slateblue');
         } else {
-          stroke(0, 255, 0);
+          stroke('springgreen');
         }
       } else {
         if (c % 2 === 1) {
-          stroke(255, 255, 0);
+          stroke('sandybrown');
         } else {
           stroke(255, 0, 0);
         }
@@ -36,7 +36,7 @@ function draw() {
 
       let x = ellipseBegin + c * (3 * ellipseGap);
       let y = ellipseBegin + r * (3 * ellipseGap);
-
+      fill('white');
       ellipse(x, y, 2 * ellipseGap);
 
       push();
@@ -49,10 +49,11 @@ function draw() {
       line(0, 0, 39, 0);
       pop();
 
-      fill('deeppink');
+      fill(80);
+      noStroke();
       let circleX = x + 39 * cos(currentAngle);
       let circleY = y + 39 * sin(currentAngle);
-      ellipse(circleX, circleY, 10);
+      ellipse(circleX, circleY, 15);
 
       noFill();
     }
