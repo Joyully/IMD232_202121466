@@ -18,7 +18,6 @@ function setup() {
 function draw() {
   background('gainsboro');
 
-  // 중첩된 for 루프
   for (let a = 0; a < pendulums.length - 1; a++) {
     pendulums[a].applyGravity(gravity);
     pendulums[a].update();
