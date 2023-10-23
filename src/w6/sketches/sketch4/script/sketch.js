@@ -1,30 +1,30 @@
 let emitter;
-let particle;
-let g;
+let gravity;
+let isMousePressed = false;
 
 function setup() {
-  setCanvasContainer('myCanvas', 2, 1, true);
+  setCanvasContainer('myCanvas', 3, 2, true);
 
-  colorMode(HSL, 360, 100, 100);
-  particle = new Ball(width / 2, 0, 0, 0, 1, 0, 100, 50);
+  gravity = createVector(0, 0.2);
 
-  emitter = new Emitter(width / 2, height);
-
-  g = createVector(0, 0.1);
-
-  background('white');
+  emitter = new Emitter(width / 2, height / 2);
+  background('gainsboro');
 }
 
 function draw() {
-  background('white');
-  const scaledG = p5.Vector.mult(g, particle.mass);
-  particle.applyForce(scaledG);
-  particle.update();
-  particle.display();
+  if (isMousePressed) {
+    emitter.setPosition(mouseX, mouseY);
+    emitter.emitParticles(100);
+    isMousePressed = false;
+  }
 
-  emitter.createBall();
-  emitter.applyGravity(g);
-  emitter.update();
+  background('gainsboro');
+  emitter.update(gravity);
   emitter.display();
-  console.log(emitter.balls.length);
+
+  console.log(emitter.particles.length);
+}
+
+function mousePressed() {
+  isMousePressed = true;
 }

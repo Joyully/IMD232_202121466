@@ -1,52 +1,36 @@
 class Emitter {
-  constructor(emittingPosX, emittingPosY) {
-    this.emittingPos = createVector(emittingPosX, emittingPosY);
-    this.balls = [];
+  constructor(x, y) {
+    this.pos = createVector(x, y);
+    this.particles = [];
   }
 
-  createBall() {
-    this.balls.push(
-      new Ball(
-        this.emittingPos.x,
-        this.emittingPos.y,
-        (TAU / 360) * -90 + random((TAU / 360) * -30, (TAU / 360) * 30),
-        random(2, 15),
-        random(1, 5),
-        random(360),
-        100,
-        50
-      )
-    );
+  setPosition(x, y) {
+    this.pos.set(x, y);
   }
 
-  applyGravity(gravity) {
-    this.balls.forEach((each) => {
-      const scaledG = p5.Vector.mult(gravity, each.mass);
-      each.applyForce(scaledG);
-    });
+  emitParticles(count) {
+    for (let i = 0; i < count; i++) {
+      const offsetX = random(-10, 10);
+      const offsetY = random(-10, 10);
+      this.particles.push(
+        new Particle(this.pos.x + offsetX, this.pos.y + offsetY)
+      );
+    }
   }
 
-  applyForce(force) {
-    this.balls.forEach((each) => {
-      each.applyForce(force);
-    });
-  }
-
-  update() {
-    // this.balls.forEach((each) => {
-    //   each.update();
-    // });
-    for (let index = this.balls.length - 1; index >= 0; index--) {
-      this.balls[index].update();
-      if (this.balls[index].isDead()) {
-        this.balls.splice(index, 1);
+  update(gravity) {
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      this.particles[i].applyForce(gravity);
+      this.particles[i].update();
+      if (this.particles[i].isDead()) {
+        this.particles.splice(i, 1);
       }
     }
   }
 
   display() {
-    this.balls.forEach((each) => {
-      each.display();
-    });
+    for (let particle of this.particles) {
+      particle.display();
+    }
   }
 }

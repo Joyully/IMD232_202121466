@@ -1,42 +1,31 @@
-class Ball {
-  constructor(posX, posY, velAngle, velMag, mass, h, s, v) {
-    this.pos = createVector(posX, posY);
-    this.vel = createVector(1, 0);
-    this.vel.rotate(velAngle);
-    this.vel.mult(velMag);
-    this.acc = createVector();
-    this.mass = mass;
-    this.rad = this.mass * 5;
-    this.color = color(h, s, v);
+class Particle {
+  constructor(x, y) {
+    this.pos = createVector(x, y);
+    this.vel = p5.Vector.random2D().mult(random(14, 15));
+    this.acc = createVector(0, 0);
+    this.rad = 10;
+    this.lifeSpan = 60;
+    this.color = color(random(255), random(255), random(255));
   }
 
   applyForce(force) {
-    const calcedAcc = p5.Vector.div(force, this.mass);
-    // const calcedAcc = force.div(this.mass);
-    this.acc.add(calcedAcc);
+    this.acc.add(force);
   }
 
   update() {
     this.vel.add(this.acc);
-    // this.vel.limit(5);
     this.pos.add(this.vel);
-    // this.acc.set(0, 0);
-    // this.acc.setMag(0);
     this.acc.mult(0);
+    this.lifeSpan -= 1;
   }
 
   display() {
-    fill(this.color);
-    noStroke();
-    ellipse(this.pos.x, this.pos.y, 2 * this.rad);
+    stroke(0, this.lifeSpan);
+    fill(this.color, this.lifeSpan);
+    ellipse(this.pos.x, this.pos.y, this.rad * 2);
   }
 
   isDead() {
-    return (
-      this.pos.x < -this.rad ||
-      this.pos.x > width + this.rad ||
-      //   this.pos.y < -this.rad ||
-      this.pos.y > height + this.rad
-    );
+    return this.lifeSpan < 0;
   }
 }
