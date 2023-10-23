@@ -12,12 +12,12 @@ function setup() {
 
 function draw() {
   background('gainsboro');
-  // if (mouseIsPressed) {
-  //   for (let a = 0; a < 100; a++) {
-  //     emitter.setPosition(mouseX, mouseY);
-  //     emitter.addParticle(a);
-  //   }
-  // }
+  for (let a = 0; a < 100; a++) {
+    if (mouseIsPressed) {
+      emitter.setPosition(mouseX, mouseY);
+      emitter.addParticle(a);
+    }
+  }
 
   emitter.update(gravity);
   emitter.display();
@@ -26,9 +26,9 @@ function draw() {
   console.log(emitter.particles.length);
 }
 
-function mouseClicked() {
-  for (let a = 0; a < 150; a++) {
-    emitter.setPosition(mouseX, mouseY);
-    emitter.addParticle(a);
-  }
-}
+// function mouseClicked() {
+//   for (let a = 0; a < 150; a++) {
+//     emitter.setPosition(mouseX, mouseY);
+//     emitter.addParticle(a);
+//   }
+// }
