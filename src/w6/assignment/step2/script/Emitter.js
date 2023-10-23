@@ -5,8 +5,11 @@ class Emitter {
   }
 
   addParticle() {
-    for (let a = 0; a <= 100; a++)
-      this.particles.push(new Particle(this.pos.x, this.pos.y));
+    this.particles.push(new Particle(this.pos.x, this.pos.y));
+  }
+
+  setPosition(x, y) {
+    this.pos.set(x, y);
   }
 
   update(gravity) {

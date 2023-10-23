@@ -17,7 +17,7 @@ class Particle {
     this.vel.add(this.acc);
     this.pos.add(this.vel);
     this.acc.mult(0); //acc 값 초기화
-    this.lifeSpan -= 2; //매번 2씩 빼줌
+    this.lifeSpan -= 1; //매번 2씩 빼줌
   }
 
   display() {

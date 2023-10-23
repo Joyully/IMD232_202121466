@@ -1,35 +1,28 @@
 let emitter;
-let emitters = [];
-let gravity = 0;
+let gravity;
 
 function setup() {
-  setCanvasContainer('myCanvas', 3, 2, true);
+  setCanvasContainer('myCanvas', 6, 4, true);
 
-  emitter = new Emitter(width / 2, height / 2);
+  emitter = new Emitter(mouseX, mouseY, 10, 60);
   gravity = createVector(0, 0.1);
 
   background('gainsboro');
 }
 
 function draw() {
-  // background('gainsboro');
   if (mouseIsPressed) {
-    emitter.addParticle();
+    for (let a = 0; a < 100; a++) {
+      emitter.setPosition(mouseX, mouseY);
+      emitter.addParticle(a);
+    }
   }
 
-  // for (let i = 0; i < emitters.length; i++) {
-  //   emitters[i].addParticle();
-  // }
-
-  emitter.update(gravity);
+  // emitter.addParticle();
 
   background('gainsboro');
-
-  emitter.addParticle();
+  emitter.update(gravity);
   emitter.display();
 
   console.log(emitter.particles.length);
 }
-// function mousePressed() {
-//   emitters.push(new Emitter(mouseX, mouseY));
-// }

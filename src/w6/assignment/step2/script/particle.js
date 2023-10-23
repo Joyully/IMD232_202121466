@@ -1,34 +1,32 @@
 class Particle {
-  constructor(x, y) {
+  constructor(x, y, mass) {
     this.pos = createVector(x, y);
-    // this.vel = p5.Vector.random2D(); 랜덤한 방향으로 1짜리 백터밖에 안감
-    this.vel = createVector(3, 0); //특정한 정해진 0도의 방향으로 길이 1짜리
+    this.vel = createVector(5, 0);
     this.vel.rotate((TAU / 360) * random(-360, 0));
     this.acc = createVector(0, 0);
     this.rad = 5;
     this.lifeSpan = 60;
-    this.mass = 10;
+    this.mass = mass;
   }
 
   applyForce(force) {
-    const acc = p5.Vector.div(force, this.mass);
-    this.acc.add(acc);
+    this.acc.add(force);
   }
 
   update() {
     this.vel.add(this.acc);
     this.pos.add(this.vel);
-    this.acc.mult(0); //acc 값 초기화
-    this.lifeSpan -= 1; //매번 2씩 빼줌
+    this.acc.mult(0);
+    this.lifeSpan -= 1;
   }
 
   display() {
-    stroke(0, this.lifeSpan);
-    fill(127, this.lifeSpan); //, 뒤에 투명도
+    noStroke();
+    fill(0, this.lifeSpan);
     ellipse(this.pos.x, this.pos.y, this.rad * 2);
   }
 
   isDead() {
-    return this.lifeSpan < 0; //lifSpan 값이 0보다 작아질 때 리턴
+    return this.lifeSpan < 0;
   }
 }
