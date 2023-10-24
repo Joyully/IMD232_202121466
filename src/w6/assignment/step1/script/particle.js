@@ -7,7 +7,7 @@ class Particle {
     // this.vel.rotate((TAU / 360) * random(15));
     this.acc = createVector(0, 0);
     this.rad = 8;
-    this.lifeSpan = 500;
+    this.lifeSpan = 400;
     this.angle = 0;
     this.angleVel = (TAU / 360) * random(360);
     this.color = color(random(360), 100, 50, 50);
