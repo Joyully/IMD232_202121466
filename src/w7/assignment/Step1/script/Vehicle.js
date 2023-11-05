@@ -7,7 +7,7 @@ class Vehicle {
     this.mass = mass;
     this.rad = rad;
     this.speedMx = speedMx;
-    this.forceMx = forceMx;
+    this.forceMx = forceMx; //값이 커지면 선회력이 좋아짐 1이면 직각
     this.neighborhooodRad = 50;
     this.color = color;
   }
@@ -27,9 +27,9 @@ class Vehicle {
       }
     });
     //나누기 할거라 0이 아니면 0보다 크면
-    //others가 있는 경우
+
     if (cnt > 0) {
-      steer.div(cnt); //평균 위치 계산
+      steer.div(cnt); //카운트를 나눔 평균 위치 계산
       steer.sub(this.pos); //현재 위치에서 빼서 방향을 이동
       steer.setMag(this.speedMx); //최대 이동 속도로 제한
       steer.sub(this.vel); //현재 속도에서 빼서 방향을 조절
@@ -54,7 +54,7 @@ class Vehicle {
       }
     });
     //나누기 할거라 0이 아니면 0보다 크면
-    //others가 있는 경우
+
     if (cnt > 0) {
       steer.div(cnt);
       steer.setMag(this.speedMx);
@@ -94,15 +94,15 @@ class Vehicle {
   }
   //외부에서 힘을 받아 가속도에 추가
   applyForce(force) {
-    const forceDivedByMass = p5.Vector.div(force, this.mass);
-    this.acc.add(forceDivedByMass);
+    const forceDivedByMass = p5.Vector.div(force, this.mass); //힘에서 질량 빼기
+    this.acc.add(forceDivedByMass); //가속에 질량을 더해줌
   }
 
   update() {
-    this.vel.add(this.acc);
+    this.vel.add(this.acc); //속도에 가속도를 더해줌
     //speedMx 값이 이미 있지만 확실하게 리밋값을 줌
-    this.vel.limit(this.speedMx);
-    this.pos.add(this.vel);
+    this.vel.limit(this.speedMx); //속도에speedMX 설정한 값으로 리밋을 줌
+    this.pos.add(this.vel); //위치 속돌르 더함
     this.acc.mult(0); //acc 값 초기화
   }
 
