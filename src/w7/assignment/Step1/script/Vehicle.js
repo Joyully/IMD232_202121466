@@ -27,7 +27,6 @@ class Vehicle {
       }
     });
     //나누기 할거라 0이 아니면 0보다 크면
-
     if (cnt > 0) {
       steer.div(cnt); //카운트를 나눔 평균 위치 계산
       steer.sub(this.pos); //현재 위치에서 빼서 방향을 이동
@@ -54,7 +53,6 @@ class Vehicle {
       }
     });
     //나누기 할거라 0이 아니면 0보다 크면
-
     if (cnt > 0) {
       steer.div(cnt);
       steer.setMag(this.speedMx);
@@ -101,7 +99,7 @@ class Vehicle {
   update() {
     this.vel.add(this.acc); //속도에 가속도를 더해줌
     //speedMx 값이 이미 있지만 확실하게 리밋값을 줌
-    this.vel.limit(this.speedMx); //속도에speedMX 설정한 값으로 리밋을 줌
+    this.vel.limit(this.speedMx);
     this.pos.add(this.vel); //위치 속돌르 더함
     this.acc.mult(0); //acc 값 초기화
   }
