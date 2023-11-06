@@ -124,11 +124,11 @@ class Vehicle {
   //캔버스에 시각적으로 나올 요소
   display() {
     push(); //넣고
-    translate(this.pos.x, this.pos.y);
-    rotate(this.vel.heading());
-    noStroke();
-    fill(this.color);
-    beginShape();
+    translate(this.pos.x, this.pos.y); //중심위치 바꾸기
+    rotate(this.vel.heading()); //회전
+    noStroke(); //스트로크 획 없이
+    fill(this.color); //설정한 색 값 채우기
+    beginShape(); //도형 만들기
     vertex(this.rad, 0);
     vertex(this.rad * cos(radians(-135)), this.rad * sin(radians(-135)));
     vertex(0, 0);
