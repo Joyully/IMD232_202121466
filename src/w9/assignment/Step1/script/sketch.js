@@ -96,16 +96,16 @@ function setup() {
     Bodies.rectangle(400, 600, 1200, 50.5, { isStatic: true }),
   ]);
 
-  (mouse = Mouse.create(document.querySelector('.p5Canvas'))),
-    (mouseConstraint = MouseConstraint.create(engine, {
-      mouse: mouse,
-      constraint: {
-        stiffness: 0.2,
-        render: {
-          visible: false,
-        },
+  mouse = Mouse.create(document.querySelector('.p5Canvas'));
+  mouseConstraint = MouseConstraint.create(engine, {
+    mouse: mouse,
+    constraint: {
+      stiffness: 0.2,
+      render: {
+        visible: false,
       },
-    }));
+    },
+  });
 
   Composite.add(world, mouseConstraint);
 
