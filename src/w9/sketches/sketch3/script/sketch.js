@@ -79,38 +79,19 @@ function setup() {
 
 function draw() {
   background('gainsboro');
+  rectMode(CENTER);
 
   beginShape();
   rock.vertices.forEach((each) => {
     vertex(each.x, each.y);
   });
   endShape(CLOSE);
-
-  // Modify pyramid
-  if (pyramid && pyramid.rows) {
-    for (let row = 0; row < pyramid.rows.length; row++) {
-      for (let col = 0; col < pyramid.rows[row].length; col++) {
-        let body = pyramid.rows[row][col];
-        fill(255, 0, 0);
-        rect(body.position.x, body.position.y, 25, 40);
-      }
-    }
-  }
-
+  // Modify ground
+  fill(0, 0, 255);
+  rect(ground.position.x, ground.position.y, 815, 50);
   // Modify ground2
   fill(0, 0, 255);
   rect(ground2.position.x, ground2.position.y, 200, 20);
-
-  // Modify pyramid2
-  if (pyramid2 && pyramid2.rows) {
-    for (let row = 0; row < pyramid2.rows.length; row++) {
-      for (let col = 0; col < pyramid2.rows[row].length; col++) {
-        let body = pyramid2.rows[row][col];
-        fill(0, 255, 0);
-        rect(body.position.x, body.position.y, 25, 40);
-      }
-    }
-  }
 }
 
 // // create renderer
