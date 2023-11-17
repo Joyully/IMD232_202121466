@@ -1,15 +1,19 @@
-var Engine = Matter.Engine,
-  Render = Matter.Render,
-  Runner = Matter.Runner,
-  Body = Matter.Body,
-  Composite = Matter.Composite,
-  Composites = Matter.Composites,
-  Constraint = Matter.Constraint,
-  MouseConstraint = Matter.MouseConstraint,
-  Mouse = Matter.Mouse,
-  Bodies = Matter.Bodies;
+const {
+  Engine,
+  Render,
+  Runner,
+  Body: MatterBody,
+  Composite,
+  Composites,
+  Constraint,
+  MouseConstraint,
+  Mouse,
+  Bodies,
+  Common,
+  Vertices,
+} = Matter;
 
-// Common.setDecomp(decomp);
+Common.setDecomp(decomp);
 
 // create engine
 var engine = Engine.create(),
@@ -18,16 +22,66 @@ var engine = Engine.create(),
 // create runner
 var runner = Runner.create();
 
-let ropeA, ropeB, ropeC, mouse, mouseConstraint;
+let ropeA;
+let ropeB;
+let ropeC;
+let mouse, mouseConstraint;
 
 function setup() {
   setCanvasContainer('myCanvas', 800, 600, true);
 
+  const concA = [
+    { x: 192 / 3, y: 40 / 3 },
+    { x: 32 / 3, y: 48 / 3 },
+    { x: 78 / 3, y: 154 / 3 },
+    { x: 118 / 3, y: 108 / 3 },
+    { x: 160 / 3, y: 150 / 3 },
+  ];
+
+  const concB = [
+    { x: 125 / 3, y: 52 / 3 },
+    { x: 161 / 3, y: 104 / 3 },
+    { x: 202 / 3, y: 52 / 3 },
+    { x: 268 / 3, y: 90 / 3 },
+    { x: 260 / 3, y: 188 / 3 },
+    { x: 202 / 3, y: 228 / 3 },
+    { x: 165 / 3, y: 188 / 3 },
+    { x: 122 / 3, y: 231 / 3 },
+    { x: 64 / 3, y: 192 / 3 },
+    { x: 52 / 3, y: 102 / 3 },
+  ];
+
+  const concC = [
+    { x: 160 / 4, y: 56 / 4 },
+    { x: 177 / 4, y: 84 / 4 },
+    { x: 196 / 4, y: 61 / 4 },
+    { x: 214 / 4, y: 105 / 4 },
+    { x: 316 / 4, y: 56 / 4 },
+    { x: 318 / 4, y: 257 / 4 },
+    { x: 219 / 4, y: 255 / 4 },
+    { x: 202 / 4, y: 231 / 4 },
+    { x: 184 / 4, y: 253 / 4 },
+    { x: 166 / 4, y: 200 / 4 },
+    { x: 53 / 4, y: 252 / 4 },
+    { x: 56 / 4, y: 78 / 4 },
+  ];
+
+  const RandomVer = (vertices) => {
+    return vertices.map((vertex) => ({
+      x: vertex.x + Math.random() * 10 - 5,
+      y: vertex.y + Math.random() * 10 - 5,
+    }));
+  };
+
+  const Body1 = decomp.quickDecomp(concA);
+  const Body2 = decomp.quickDecomp(concB);
+  const Body3 = decomp.quickDecomp(concC);
+
   // add bodies
-  var group = Body.nextGroup(true);
+  var group = MatterBody.nextGroup(true);
 
   ropeA = Composites.stack(100, 50, 8, 1, 10, 10, function (x, y) {
-    return Bodies.rectangle(x, y, 50, 20, {
+    return Bodies.fromVertices(x, y, RandomVer(concA), {
       collisionFilter: { group: group },
     });
   });
@@ -48,10 +102,12 @@ function setup() {
     })
   );
 
-  group = Body.nextGroup(true);
+  group = MatterBody.nextGroup(true);
 
-  ropeB = Composites.stack(350, 50, 10, 1, 10, 10, function (x, y) {
-    return Bodies.circle(x, y, 20, { collisionFilter: { group: group } });
+  ropeB = Composites.stack(350, 50, 6, 1, 5, 5, function (x, y) {
+    return Bodies.fromVertices(x, y, RandomVer(concB), {
+      collisionFilter: { group: group },
+    });
   });
 
   Composites.chain(ropeB, 0.5, 0, -0.5, 0, {
@@ -69,10 +125,10 @@ function setup() {
     })
   );
 
-  group = Body.nextGroup(true);
+  group = MatterBody.nextGroup(true);
 
-  ropeC = Composites.stack(600, 50, 13, 1, 10, 10, function (x, y) {
-    return Bodies.rectangle(x - 20, y, 50, 20, {
+  ropeC = Composites.stack(600, 50, 10, 1, 10, 10, function (x, y) {
+    return Bodies.fromVertices(x, y, RandomVer(concC), {
       collisionFilter: { group: group },
       chamfer: 5,
     });
@@ -109,44 +165,73 @@ function setup() {
 
   Composite.add(world, mouseConstraint);
 
-  Runner.run(runner, engine);
   background('gainsboro');
+  Runner.run(runner, engine);
 }
 
 function draw() {
   background('gainsboro');
+  colorMode(HSL);
+  noStroke();
 
   // Update the physics engine
   Engine.update(engine);
+  // concA 그리기
+  fill('slateblue');
+  drawParts(ropeA);
 
-  // Render the ropes
-  for (let i = 0; i < ropeA.bodies.length; i++) {
-    fill(255);
-    stroke(0);
-    beginShape();
-    for (let j = 0; j < ropeA.bodies[i].vertices.length; j++) {
-      vertex(ropeA.bodies[i].vertices[j].x, ropeA.bodies[i].vertices[j].y);
-    }
-    endShape(CLOSE);
-  }
+  // concB 그리기
+  fill('deeppink');
+  drawParts(ropeB);
 
-  for (let i = 0; i < ropeB.bodies.length; i++) {
-    fill(255);
-    stroke(0);
-    ellipse(
-      ropeB.bodies[i].position.x,
-      ropeB.bodies[i].position.y,
-      ropeB.bodies[i].circleRadius * 2
-    );
-  }
+  // concC 그리기
 
-  for (let i = 0; i < ropeC.bodies.length; i++) {
-    fill(255);
-    stroke(0);
-    beginShape();
-    for (var j = 0; j < ropeC.bodies[i].vertices.length; j++) {
-      vertex(ropeC.bodies[i].vertices[j].x, ropeC.bodies[i].vertices[j].y);
-    }
-    endShape(CLOSE);
-  }
+  fill('salmon');
+  drawParts(ropeC);
+
+  console.log('length', ropeC.bodies[1].parts.length);
 }
+function drawParts(rope) {
+  rope.bodies.forEach((eachBody) => {
+    eachBody.parts.forEach((eachPart, idx) => {
+      if (idx === 0) return;
+      beginShape();
+      eachPart.vertices.forEach((eachVertex) => {
+        vertex((eachVertex.x / 800) * width, (eachVertex.y / 600) * height);
+      });
+      endShape(CLOSE);
+    });
+  });
+}
+
+//   // Render the ropes
+//   for (let i = 0; i < ropeA.bodies.length; i++) {
+//     fill(255);
+//     stroke(0);
+//     beginShape();
+//     for (let j = 0; j < ropeA.bodies[i].vertices.length; j++) {
+//       vertex(ropeA.bodies[i].vertices[j].x, ropeA.bodies[i].vertices[j].y);
+//     }
+//     endShape(CLOSE);
+//   }
+
+//   for (let i = 0; i < ropeB.bodies.length; i++) {
+//     fill(255);
+//     stroke(0);
+//     ellipse(
+//       ropeB.bodies[i].position.x,
+//       ropeB.bodies[i].position.y,
+//       ropeB.bodies[i].circleRadius * 2
+//     );
+//   }
+
+//   for (let i = 0; i < ropeC.bodies.length; i++) {
+//     fill(255);
+//     stroke(0);
+//     beginShape();
+//     for (var j = 0; j < ropeC.bodies[i].vertices.length; j++) {
+//       vertex(ropeC.bodies[i].vertices[j].x, ropeC.bodies[i].vertices[j].y);
+//     }
+//     endShape(CLOSE);
+//   }
+// }
