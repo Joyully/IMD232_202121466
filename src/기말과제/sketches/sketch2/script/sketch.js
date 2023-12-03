@@ -8,7 +8,7 @@ function setup() {
 
 function draw() {
   background('gainsboro');
-  translate(width / 2, height / 2);
+  translate(mouseX, mouseY); // Use mouseX and mouseY for translation
 
   for (let i = 0; i < 10; i++) {
     stroke(30);

@@ -1,62 +1,41 @@
-let lines = [];
+let angles = [];
+let isMouseClicked = false;
 
 function setup() {
-  setCanvasContainer('canvas', 2, 2, true);
+  createCanvas(1600, 1600);
   background('gainsboro');
-
-  for (let n = 0; n < 360; n += 2) {
-    let x = random(50, 150);
-    let xx = random(150, 350);
-    lines.push({ x, xx, angle: radians(n) });
-  }
 }
 
 function draw() {
   background('gainsboro');
-  translate(width / 2, height / 2);
-
-  for (let i = 0; i < lines.length; i++) {
-    let lineObj = lines[i];
-    push();
-    rotate(lineObj.angle);
-    strokeCap(SQUARE);
-    strokeWeight(4);
-    stroke(40);
-    line(lineObj.x, 0, lineObj.xx, 0);
-    pop();
+  if (isMouseClicked == true) {
+    translate(mouseX, mouseY);
+  } else if (isMouseClicked == false) {
+    translate(width / 2, height / 2);
   }
-}
 
-function mouseMoved() {
-  for (let i = 0; i < lines.length; i++) {
-    let lineObj = lines[i];
-    lineObj.x = map(sin(lineObj.angle + frameCount), -1, 1, 50, 150);
-    lineObj.xx = map(sin(lineObj.angle + frameCount), -1, 1, 150, 350);
-  }
-}
-
-function mousePressed() {
-  for (let i = 0; i < lines.length; i++) {
-    let lineObj = lines[i];
-    lineObj.isDragging =
-      dist(mouseX - width / 2, mouseY - height / 2, lineObj.x, 0) < 10 ||
-      dist(mouseX - width / 2, mouseY - height / 2, lineObj.xx, 0) < 10;
-  }
-}
-
-function mouseDragged() {
-  for (let i = 0; i < lines.length; i++) {
-    let lineObj = lines[i];
-    if (lineObj.isDragging) {
-      lineObj.x = mouseX - width / 2;
-      lineObj.xx = mouseX - width / 2 + 200;
-      lineObj.angle = atan2(mouseY - height / 2, mouseX - width / 2);
+  for (let i = 0; i < 10; i++) {
+    stroke(30);
+    for (let n = 0; n < 360; n += 2) {
+      let x = random(50, 150);
+      let xx = random(150, 350);
+      push();
+      rotate(radians(n));
+      strokeCap(SQUARE);
+      strokeWeight(4);
+      line(x, 0, xx, 0);
+      pop();
+      if (isMouseClicked) {
+        stroke(random(255), random(255), random(255));
+      }
     }
   }
 }
 
+function mousePressed() {
+  isMouseClicked = true;
+}
+
 function mouseReleased() {
-  for (let i = 0; i < lines.length; i++) {
-    lines[i].isDragging = false;
-  }
+  isMouseClicked = false;
 }
