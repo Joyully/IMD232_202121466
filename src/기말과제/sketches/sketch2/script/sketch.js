@@ -1,37 +1,18 @@
-let angles = [];
-let isMouseClicked = false;
+let magicEightBall;
 
 function setup() {
-  setCanvasContainer('canvas', 2, 2, true);
-  background('gainsboro');
+  magicEightBall = new MagicEightBall();
+  magicEightBall.setup();
 }
 
 function draw() {
-  background('gainsboro');
-  translate(mouseX, mouseY); // Use mouseX and mouseY for translation
-
-  for (let i = 0; i < 10; i++) {
-    stroke(30);
-    for (let n = 0; n < 360; n += 2) {
-      let x = random(50, 150);
-      let xx = random(150, 350);
-      push();
-      rotate(radians(n));
-      strokeCap(SQUARE);
-      strokeWeight(4);
-      line(x, 0, xx, 0);
-      pop();
-      if (isMouseClicked) {
-        stroke(random(255), random(255), random(255));
-      }
-    }
-  }
+  magicEightBall.draw();
 }
 
 function mousePressed() {
-  isMouseClicked = true;
+  magicEightBall.mousePressed();
 }
 
 function mouseReleased() {
-  isMouseClicked = false;
+  magicEightBall.mouseReleased();
 }

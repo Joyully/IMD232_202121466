@@ -1,33 +1,80 @@
-let angles = [];
+let angle;
 let isMouseClicked = false;
-let currentColor;
+
+let texts = [
+  'Yes',
+  'No',
+  'It is certain',
+  'Most likely',
+  'My reply is no',
+  'Ask again later',
+  'As i see it yes',
+];
+let selectedText = '';
+let initialTextDisplayed = false;
+let strokeColor;
 
 function setup() {
-  setCanvasContainer('canvas', 2, 2, true);
+  // 400x400 크기로 설정
+  setCanvasContainer('canvas', windowWidth * 0.5, windowHeight * 0.5, true);
   background('gainsboro');
+
+  strokeCap(SQUARE);
 }
 
 function draw() {
-  background('gainsboro');
+  // 캔버스 크기에 따라 중심 좌표 계산
+  let centerX = isMouseClicked ? mouseX : width / 2;
+  let centerY = isMouseClicked ? mouseY : height / 2;
 
-  if (isMouseClicked) {
-    translate(mouseX, mouseY);
-  } else {
-    translate(width / 2, height / 2);
+  background('gainsboro');
+  translate(centerX, centerY);
+
+  for (let angle = 0; angle <= 360; angle += 1) {
+    push();
+    rotate(radians(angle));
+    let x = random(300, 350);
+    let xx = random(50, 80);
+
+    stroke('blue');
+    strokeWeight(4);
+    line(x, 0, width, 0);
+
+    stroke('blue');
+    strokeWeight(2);
+    line(0, 0, xx, 0);
+    pop();
   }
 
-  for (let i = 0; i < 10; i++) {
-    stroke(getRandomColor());
-    for (let n = 0; n < 360; n += 2) {
-      let x = random(50, 150);
-      let xx = random(150, 350);
-      push();
-      rotate(radians(n));
-      strokeCap(SQUARE);
-      strokeWeight(4);
-      line(x, 0, xx, 0);
-      pop();
+  if (isMouseClicked) {
+    strokeWeight(1);
+    fill(20);
+    textSize(15);
+    textAlign(CENTER, CENTER);
+
+    text(random(texts), 0, 0);
+    selectedText = random(texts);
+  } else {
+    strokeWeight(35);
+    fill(255);
+    stroke(0, 0, 0, 95);
+    textSize(25);
+    if (!initialTextDisplayed) {
+      textAlign(CENTER, CENTER);
+
+      text(random(texts), 0, 0);
+      initialTextDisplayed = true;
+    } else {
+      textAlign(CENTER, CENTER);
+
+      text(selectedText, 0, 0);
     }
+  }
+}
+
+function getRandomColor() {
+  if (isMouseClicked) {
+    color(random(255), random(255), random(255));
   }
 }
 
@@ -39,27 +86,13 @@ function mouseReleased() {
   isMouseClicked = false;
 }
 
-function getRandomColor() {
-  if (isMouseClicked) {
-    colorMode(HSL);
-    return lerpColor(color(30), color(random(255), 50, 50), 1);
-  } else {
-    return color(20);
-  }
+function windowResized() {
+  // 창 크기 변경 시에도 캔버스 크기 유지
+  resizeCanvas(windowWidth * 0.5, windowHeight * 0.5);
 }
 
-// function getRandomColor() {
-//   if (isMouseClicked) {
-//     return lerpColor(
-//       color(30),
-//       color(
-//         map(mouseX, 0, width, 0, 255),
-//         map(mouseY, 0, height, 0, 255),
-//         map(mouseX - mouseY, 0, width - height, 0, 255)
-//       ),
-//       1
-//     );
-//   } else {
-//     return color(30);
-//   }
-// }
+function keyPressed() {
+  if (key == ' ') {
+    redraw();
+  }
+}
