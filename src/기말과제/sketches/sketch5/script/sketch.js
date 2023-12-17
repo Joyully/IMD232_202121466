@@ -1,63 +1,45 @@
-let flowers = [];
+let messages = ['고민이 있으신가요?', '고민을 생각하고', '볼을 흔들어보세요'];
+let displayTime = 150; // 각 글자가 표시될 시간 (프레임 수)
+let fadeOutTime = 30; // 페이드 아웃에 사용될 시간
+let rectDisplayTime = 400; // 사각형이 표시될 시간 (프레임 수)
+let currentMessageIndex = 0; // 현재 표시 중인 글자의 인덱스
+let alpha = 255; // 텍스트의 투명도
+let rectAlpha = 255; // 사각형의 투명도
 
 function setup() {
-  setCanvasContainer('myCanvas', 400, 400, true);
-  background('gainsboro');
-  noStroke();
-
-  translate(width / 2, height / 2);
-
-  // 꽃 모양 그리기
-  drawFlower();
-
-  // circle 그리기
-  circle(CENTER);
-  colorMode(HSL, 360, 100, 100, 100);
-  fill(random(360), 50, 50, 90);
-  circle(0, 0, 60);
-}
-
-function drawFlower() {
-  ellipseMode(CENTER);
-
-  let numPetals = int(random(6, 20)); // 6에서 20개의 꽃잎 개수 랜덤 설정
-
-  for (let i = 0; i < numPetals; i++) {
-    let angle = map(i, 0, numPetals, 0, TWO_PI);
-    let petalSize = 80;
-
-    // 각각의 꽃잎을 Flower 클래스로 생성하여 배열에 추가
-    flowers.push(new Flower(0, 80, petalSize, angle));
-  }
+  createCanvas(400, 200);
 }
 
 function draw() {
-  background('gainsboro');
-  translate(width / 2, height / 2);
+  background(220);
 
-  // 각 꽃잎을 배열에서 가져와 그리기
-  for (let i = 0; i < flowers.length; i++) {
-    flowers[i].display();
+  if (rectDisplayTime > 0) {
+    rectMode(CENTER);
+    fill(50, 255);
+    rect(width / 2, height / 2, 400);
+    rectDisplayTime--;
+    rectAlpha = 255;
   }
-}
 
-function mousePressed() {
-  // 각 꽃잎을 클릭했는지 확인
-  for (let i = 0; i < flowers.length; i++) {
-    flowers[i].checkDrag();
-  }
-}
+  if (currentMessageIndex < messages.length) {
+    textAlign(CENTER, CENTER);
+    textSize(32);
+    fill(0, alpha); // 텍스트의 투명도 적용
+    text(messages[currentMessageIndex], width / 2, height / 2);
 
-function mouseDragged() {
-  // 클릭한 꽃잎을 드래그
-  for (let i = 0; i < flowers.length; i++) {
-    flowers[i].drag();
-  }
-}
+    // 프레임이 지날수록 displayTime을 감소
+    displayTime--;
 
-function mouseReleased() {
-  // 드래그 중인 꽃잎을 놓음
-  for (let i = 0; i < flowers.length; i++) {
-    flowers[i].release();
+    // 페이드 아웃 효과
+    if (displayTime <= fadeOutTime) {
+      alpha = map(displayTime, 0, fadeOutTime, 0, 255);
+    }
+
+    if (displayTime <= 0) {
+      // 다음 글자로 넘어가고 displayTime 및 alpha 초기화
+      currentMessageIndex++;
+      displayTime = 120;
+      alpha = 255;
+    }
   }
 }
