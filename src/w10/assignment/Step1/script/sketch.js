@@ -1,4 +1,4 @@
-class GameOfLife {
+class RPS {
   constructor() {
     this.cells = [];
     this.rowNum = 60;
@@ -95,7 +95,7 @@ class GameOfLife {
 let game;
 function setup() {
   setCanvasContainer('myCanvas', 1, 1, true);
-  game = new GameOfLife();
+  game = new RPS();
 }
 
 function draw() {
